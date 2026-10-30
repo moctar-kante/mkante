@@ -1,0 +1,24 @@
+{
+  "overview": "Trilingual professional academic website for Moctar Kante, a plant scientist and breeder. Features a public read-only site with profile, experience, education, publications (ORCID), ongoing projects with gallery, and relevant links. Fully protected admin panel for content management via Internet Identity.",
+  "features": [
+    "Trilingual support (EN/FR/ES) for all content",
+    "Public academic profile with ORCID publications",
+    "Ongoing projects section with gallery and per-objective status tracking",
+    "Relevant Links section with curated external links",
+    "Protected admin panel at /admin with Internet Identity login",
+    "Single-owner admin access (only Moctar's principal)",
+    "Dark mode toggle (OS-aware, persistent)",
+    "Full CRUD for all content sections in admin panel",
+    "Minimalist academic design with deep green accent"
+  ],
+  "category": "professional-website",
+  "tags": [
+    "academic",
+    "portfolio",
+    "trilingual",
+    "plant-science",
+    "admin-panel",
+    "internet-identity"
+  ],
+  "last_updated": "2026-04-10T14:57:00.670Z"
+}

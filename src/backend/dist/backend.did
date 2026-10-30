@@ -1,0 +1,206 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = record {name: text;};
+type SocialLink = 
+ record {
+   displayOrder: nat;
+   id: nat;
+   platform: text;
+   url: text;
+ };
+type RelevantLinkInput = 
+ record {
+   description: opt LocalizedText;
+   displayOrder: nat;
+   title: LocalizedText;
+   url: text;
+ };
+type RelevantLink = 
+ record {
+   createdAt: int;
+   description: opt LocalizedText;
+   displayOrder: nat;
+   id: nat;
+   title: LocalizedText;
+   updatedAt: int;
+   url: text;
+ };
+type Publication = 
+ record {
+   authors: text;
+   displayOrder: nat;
+   doi: text;
+   featured: bool;
+   id: nat;
+   isPreprint: bool;
+   title: text;
+   url: text;
+   venue: text;
+   year: nat;
+ };
+type Profile = 
+ record {
+   avatarUrl: text;
+   bio: LocalizedText;
+   bioShort: LocalizedText;
+   cvDownloadUrl: opt text;
+   email: text;
+   fullName: text;
+   githubUrl: opt text;
+   headline: LocalizedText;
+   linkedinUrl: opt text;
+   location: text;
+   orcidId: text;
+   orcidUrl: text;
+   title: text;
+ };
+type OngoingProjectInput = 
+ record {
+   displayOrder: nat;
+   fundingSource: LocalizedText;
+   gallery: vec text;
+   objectiveStatuses: vec ObjectiveWithStatus;
+   objectives: LocalizedText;
+   title: LocalizedText;
+   workplan: LocalizedText;
+ };
+type OngoingProject = 
+ record {
+   createdAt: int;
+   displayOrder: nat;
+   fundingSource: LocalizedText;
+   gallery: vec text;
+   id: nat;
+   objectiveStatuses: vec ObjectiveWithStatus;
+   objectives: LocalizedText;
+   title: LocalizedText;
+   updatedAt: int;
+   workplan: LocalizedText;
+ };
+type ObjectiveWithStatus = 
+ record {
+   objective: text;
+   status: ObjectiveStatus;
+ };
+type ObjectiveStatus = 
+ variant {
+   Completed;
+   InProgress;
+   NotStarted;
+ };
+type LocalizedText = 
+ record {
+   en: text;
+   es: text;
+   fr: text;
+ };
+type Language = 
+ record {
+   displayOrder: nat;
+   id: nat;
+   level: LocalizedText;
+   name: LocalizedText;
+ };
+type Experience = 
+ record {
+   description: LocalizedText;
+   displayOrder: nat;
+   endDate: opt text;
+   id: nat;
+   location: text;
+   organization: text;
+   startDate: text;
+   tags: vec text;
+   title: LocalizedText;
+ };
+type Education = 
+ record {
+   degree: LocalizedText;
+   displayOrder: nat;
+   endYear: nat;
+   field: LocalizedText;
+   id: nat;
+   institution: text;
+   location: text;
+   notes: LocalizedText;
+   startYear: nat;
+   thesisHost: opt text;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addGalleryImage: (projectId: nat, imageUrl: text) -> (opt OngoingProject);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createEducation: (input: Education) -> (nat);
+  createExperience: (input: Experience) -> (nat);
+  createLanguage: (input: Language) -> (nat);
+  createOngoingProject: (input: OngoingProjectInput) -> (OngoingProject);
+  createPublication: (input: Publication) -> (nat);
+  createRelevantLink: (input: RelevantLinkInput) -> (RelevantLink);
+  createSocialLink: (input: SocialLink) -> (nat);
+  deleteEducation: (id: nat) -> ();
+  deleteExperience: (id: nat) -> ();
+  deleteLanguage: (id: nat) -> ();
+  deleteOngoingProject: (id: nat) -> (bool);
+  deletePublication: (id: nat) -> ();
+  deleteRelevantLink: (id: nat) -> (bool);
+  deleteSocialLink: (id: nat) -> ();
+  getAllEducation: () -> (vec Education) query;
+  getAllExperiences: () -> (vec Experience) query;
+  getAllLanguages: () -> (vec Language) query;
+  getAllOngoingProjects: () -> (vec OngoingProject) query;
+  getAllPublications: () -> (vec Publication) query;
+  getAllRelevantLinks: () -> (vec RelevantLink) query;
+  getAllSocialLinks: () -> (vec SocialLink) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getEducationById: (id: nat) -> (opt Education) query;
+  getExperienceById: (id: nat) -> (opt Experience) query;
+  getLanguageById: (id: nat) -> (opt Language) query;
+  getOngoingProjectById: (id: nat) -> (opt OngoingProject) query;
+  getProfile: () -> (opt Profile) query;
+  getPublicationById: (id: nat) -> (opt Publication) query;
+  getRelevantLinkById: (id: nat) -> (opt RelevantLink) query;
+  getSocialLinkById: (id: nat) -> (opt SocialLink) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  removeGalleryImage: (projectId: nat, imageUrl: text) ->
+   (opt OngoingProject);
+  saveCallerUserProfile: (userProfile: UserProfile) -> ();
+  seedInitialData: () -> ();
+  updateEducation: (id: nat, education: Education) -> ();
+  updateEducationOrder: (order: vec record {
+                                      nat;
+                                      nat;
+                                    }) -> ();
+  updateExperience: (id: nat, experience: Experience) -> ();
+  updateExperienceOrder: (order: vec record {
+                                       nat;
+                                       nat;
+                                     }) -> ();
+  updateLanguage: (id: nat, language: Language) -> ();
+  updateLanguageOrder: (order: vec record {
+                                     nat;
+                                     nat;
+                                   }) -> ();
+  updateOngoingProject: (id: nat, input: OngoingProjectInput) ->
+   (opt OngoingProject);
+  updateOngoingProjectOrder: (ids: vec nat) -> ();
+  updateProfile: (newProfile: Profile) -> ();
+  updatePublication: (id: nat, publication: Publication) -> ();
+  updatePublicationOrder: (order: vec record {
+                                        nat;
+                                        nat;
+                                      }) -> ();
+  updateRelevantLink: (id: nat, input: RelevantLinkInput) ->
+   (opt RelevantLink);
+  updateRelevantLinksOrder: (ids: vec nat) -> (bool);
+  updateSocialLink: (id: nat, link: SocialLink) -> ();
+  updateSocialLinksOrder: (order: vec record {
+                                        nat;
+                                        nat;
+                                      }) -> ();
+}

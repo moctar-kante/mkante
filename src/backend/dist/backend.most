@@ -1,0 +1,161 @@
+// Version: 1.0.0
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Education__773331364 =
+  {
+    degree : LocalizedText__174081799;
+    displayOrder : Nat;
+    endYear : Nat;
+    field : LocalizedText__174081799;
+    id : Nat;
+    institution : Text;
+    location : Text;
+    notes : LocalizedText__174081799;
+    startYear : Nat;
+    thesisHost : ?Text
+  };
+type Experience__35903120 =
+  {
+    description : LocalizedText__174081799;
+    displayOrder : Nat;
+    endDate : ?Text;
+    id : Nat;
+    location : Text;
+    organization : Text;
+    startDate : Text;
+    tags : [Text];
+    title : LocalizedText__174081799
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Language__38428764 =
+  {
+    displayOrder : Nat;
+    id : Nat;
+    level : LocalizedText__174081799;
+    name : LocalizedText__174081799
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type LocalizedText__174081799 = {en : Text; es : Text; fr : Text};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type ObjectiveStatus__346634787 = {#Completed; #InProgress; #NotStarted};
+type ObjectiveWithStatus__787338605 =
+  {objective : Text; status : ObjectiveStatus__346634787};
+type OngoingProject__928580182 =
+  {
+    createdAt : Int;
+    displayOrder : Nat;
+    fundingSource : LocalizedText__174081799;
+    gallery : [Text];
+    id : Nat;
+    objectiveStatuses : [ObjectiveWithStatus__787338605];
+    objectives : LocalizedText__174081799;
+    title : LocalizedText__174081799;
+    updatedAt : Int;
+    workplan : LocalizedText__174081799
+  };
+type Profile__340690988 =
+  {
+    avatarUrl : Text;
+    bio : LocalizedText__174081799;
+    bioShort : LocalizedText__174081799;
+    cvDownloadUrl : ?Text;
+    email : Text;
+    fullName : Text;
+    githubUrl : ?Text;
+    headline : LocalizedText__174081799;
+    linkedinUrl : ?Text;
+    location : Text;
+    orcidId : Text;
+    orcidUrl : Text;
+    title : Text
+  };
+type Publication__798070609 =
+  {
+    authors : Text;
+    displayOrder : Nat;
+    doi : Text;
+    featured : Bool;
+    id : Nat;
+    isPreprint : Bool;
+    title : Text;
+    url : Text;
+    venue : Text;
+    year : Nat
+  };
+type RelevantLink__848937367 =
+  {
+    createdAt : Int;
+    description : ?LocalizedText__174081799;
+    displayOrder : Nat;
+    id : Nat;
+    title : LocalizedText__174081799;
+    updatedAt : Int;
+    url : Text
+  };
+type SocialLink__838663127 =
+  {displayOrder : Nat; id : Nat; platform : Text; url : Text};
+type UserProfile__491224006 = {name : Text};
+type UserRole__1054455867 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable educationMap :
+    {
+      var root : Node__46230540<Nat, Education__773331364>;
+      var size : Nat__490723111
+    };
+  stable experiencesMap :
+    {
+      var root : Node__46230540<Nat, Experience__35903120>;
+      var size : Nat__490723111
+    };
+  stable languagesMap :
+    {
+      var root : Node__46230540<Nat, Language__38428764>;
+      var size : Nat__490723111
+    };
+  stable var nextEducationId : Nat;
+  stable var nextExperienceId : Nat;
+  stable var nextLanguageId : Nat;
+  stable var nextProjectId : Nat;
+  stable var nextPublicationId : Nat;
+  stable var nextRelevantLinkId : Nat;
+  stable var nextSocialLinkId : Nat;
+  stable ongoingProjectsMap :
+    {
+      var root : Node__46230540<Nat, OngoingProject__928580182>;
+      var size : Nat__490723111
+    };
+  stable var profile : ?Profile__340690988;
+  stable publicationsMap :
+    {
+      var root : Node__46230540<Nat, Publication__798070609>;
+      var size : Nat__490723111
+    };
+  stable relevantLinksMap :
+    {
+      var root : Node__46230540<Nat, RelevantLink__848937367>;
+      var size : Nat__490723111
+    };
+  stable socialLinksMap :
+    {
+      var root : Node__46230540<Nat, SocialLink__838663127>;
+      var size : Nat__490723111
+    };
+  stable userProfiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__491224006>;
+      var size : Nat__490723111
+    }
+};
